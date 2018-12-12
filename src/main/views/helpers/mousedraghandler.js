@@ -41,6 +41,7 @@ define(function() {
     this._mouseMove = this.mouseMove.bind(this);
 
     this._stage.on('mousedown', this._mouseDown);
+    this._stage.on('touchstart', this._mouseDown);
 
     this._mouseDownClientX = null;
   }
@@ -64,7 +65,12 @@ define(function() {
       return;
     }
 
-    this._mouseDownClientX = event.evt.clientX;
+    if (event.type === 'touchstart') {
+      this._mouseDownClientX = event.evt.touches[0].clientX;
+    }
+    else {
+      this._mouseDownClientX = event.evt.clientX;
+    }
 
     if (this._handlers.onMouseDown) {
       var mouseDownPosX = this._getMousePosX(this._mouseDownClientX);
@@ -77,6 +83,7 @@ define(function() {
     // mouse outside the stage.
     window.addEventListener('mousemove', this._mouseMove, false);
     window.addEventListener('mouseup', this._mouseUp, false);
+    window.addEventListener('touchend', this._mouseUp, false);
     window.addEventListener('blur', this._mouseUp, false);
   };
 
@@ -118,6 +125,7 @@ define(function() {
 
     window.removeEventListener('mousemove', this._mouseMove, false);
     window.removeEventListener('mouseup', this._mouseUp, false);
+    window.removeEventListener('touchend', this._mouseUp, false);
     window.removeEventListener('blur', this._mouseUp, false);
 
     this._dragging = false;
