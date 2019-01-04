@@ -114,10 +114,29 @@ define([
 
     this._playheadGroup = new Konva.Group({
       x: 0,
-      y: 0
+      y: 0,
+      draggable: true,
+      dragBoundFunc: function(pos) {
+        return {
+          x: pos.x, // No constraint horizontally
+          y: this.getAbsolutePosition().y // Constrained vertical line
+        };
+      }
+    });
+
+    this._playheadGroup.on('dragend', function(e) {
+      this._view.syncPlayhead(e.target.attrs.x);
+    }.bind(this));
+
+    var circle = new Konva.Circle({
+      y: 15,
+      radius: 10,
+      fill: 'red',
+      strokeWidth: 0
     });
 
     this._playheadGroup.add(this._playheadLine);
+    this._playheadGroup.add(circle);
 
     if (showTime) {
       this._playheadGroup.add(this._playheadText);

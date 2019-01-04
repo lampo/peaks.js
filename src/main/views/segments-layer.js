@@ -146,7 +146,9 @@ define([
         segmentGroup: segmentGroup,
         segment:      segment,
         layer:        self._layer,
-        onDrag:       editable ? self._onSegmentHandleDrag.bind(self) : null
+        onDrag:       editable ? self._onSegmentHandleDrag.bind(self) : null,
+        segmentMarkerHandle: this._peaks.options.segmentMarkerHandle ? this._peaks.options.segmentMarkerHandle : null,
+        segmentMarkerLine: this._peaks.options.segmentMarkerLine ? this._peaks.options.segmentMarkerLine : null
       });
 
       segmentGroup.add(segmentGroup.inMarker);
@@ -159,7 +161,9 @@ define([
         segmentGroup: segmentGroup,
         segment:      segment,
         layer:        self._layer,
-        onDrag:       editable ? self._onSegmentHandleDrag.bind(self) : null
+        onDrag:       editable ? self._onSegmentHandleDrag.bind(self) : null,
+        segmentMarkerHandle: this._peaks.options.segmentMarkerHandle ? this._peaks.options.segmentMarkerHandle : null,
+        segmentMarkerLine: this._peaks.options.segmentMarkerLine ? this._peaks.options.segmentMarkerLine : null
       });
 
       segmentGroup.add(segmentGroup.outMarker);

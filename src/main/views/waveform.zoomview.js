@@ -74,7 +74,7 @@ define([
 
     self.waveformLayer = new Konva.FastLayer();
 
-    self.axis = new WaveformAxis(self, self.waveformLayer);
+    // self.axis = new WaveformAxis(self, self.waveformLayer);
 
     self.createWaveform();
 
@@ -214,6 +214,21 @@ define([
 
     self.peaks.emit('waveform_ready.zoomview', this);
   }
+
+  WaveformZoomView.prototype.syncPlayhead = function(mousePosX) {
+    if (!this.mouseDragHandler.isDragging()) {
+      var mouseDownX = Math.floor(mousePosX);
+
+      var pixelIndex = this.frameOffset + mouseDownX;
+
+      var time = this.pixelsToTime(pixelIndex);
+
+      this.updateWaveform(pixelIndex - mouseDownX);
+      this._playheadLayer.updatePlayheadTime(time);
+      this.peaks.player.seek(time);
+      this.peaks.emit('user_seek', time);
+    }
+  };
 
   /**
    * Changes the zoom level.

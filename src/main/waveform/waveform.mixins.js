@@ -22,6 +22,8 @@ define(['konva'], function(Konva) {
    * @property {Object} segment
    * @property {Konva.Layer} layer
    * @property {Function} onDrag Callback after drag completed.
+   * @property {Konva Shape} segmentMarkerHandle Konva shape like poly, rect, circle, etc.
+   * @property {Konva.Line} segmentMarkerLine Konva shape, line is recommended but can be any shape.
    */
 
   /**
@@ -80,25 +82,39 @@ define(['konva'], function(Konva) {
     text.hide();
     group.label = text;
 
-    var handle = new Konva.Rect({
-      x:           handleX,
-      y:           handleY,
-      width:       handleWidth,
-      height:      handleHeight,
-      fill:        options.color,
-      stroke:      options.color,
-      strokeWidth: 1
-    });
+    var handle = null;
+
+    if (options.segmentMarkerHandle) {
+      handle = new Konva[options.segmentMarkerHandle.shapeType](options.segmentMarkerHandle);
+    }
+    else {
+      handle = new Konva.Rect({
+        x:           handleX,
+        y:           handleY,
+        width:       handleWidth,
+        height:      handleHeight,
+        fill:        options.color,
+        stroke:      options.color,
+        strokeWidth: 1
+      });
+    }
 
     // Vertical Line
 
-    var line = new Konva.Line({
-      x:           0,
-      y:           0,
-      points:      [0.5, 0, 0.5, options.height],
-      stroke:      options.color,
-      strokeWidth: 1
-    });
+    var line = null;
+
+    if (options.segmentMarkerLine) {
+      line = new Konva[options.segmentMarkerLine.shapeType](options.segmentMarkerLine);
+    }
+    else {
+      line = new Konva.Line({
+        x:           0,
+        y:           0,
+        points:      [0.5, 0, 0.5, options.height],
+        stroke:      options.color,
+        strokeWidth: 1
+      });
+    }
 
     // Events
 

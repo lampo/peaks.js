@@ -243,7 +243,17 @@ define('peaks', [
       /**
        * Use animation on zoom
        */
-      zoomAdapter: 'static'
+      zoomAdapter: 'static',
+
+      /**
+       * Custom Konva shape options you wish to use for the handle
+       */
+      segmentMarkerHandle: null,
+
+      /**
+       * Custom Konva line options you wish to use for the line marker (will accept any Konva shape)
+       */
+      segmentMarkerLine: null
     };
 
     /**
@@ -371,7 +381,12 @@ define('peaks', [
           throw new TypeError('Peaks.init(): options.segments must be an array of segment objects');
         }
 
+        var time = self.options.segments[0].startTime;
+        var pixelsZoom = self.waveform.waveformZoomView.timeToPixels(self.options.segments[0].startTime);
+
         self.segments.add(self.options.segments);
+        self.waveform.waveformZoomView.syncPlayhead(pixelsZoom);
+        self.player.seek(time);
       }
 
       if (self.options.points) {
