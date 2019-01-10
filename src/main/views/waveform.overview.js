@@ -58,8 +58,6 @@ define([
 
     self.waveformLayer = new Konva.FastLayer();
 
-    self.axis = new WaveformAxis(self, self.waveformLayer);
-
     self.createWaveform();
 
     self._segmentsLayer = new SegmentsLayer(peaks, self, false);

@@ -80,24 +80,40 @@ define(['konva'], function(Konva) {
     text.hide();
     group.label = text;
 
-    var handle = new Konva.Rect({
-      x:           handleX,
-      y:           handleY,
-      width:       handleWidth,
-      height:      handleHeight,
-      fill:        options.color,
-      stroke:      options.color,
-      strokeWidth: 1
+    var handleData = '';
+
+    if (options.inMarker) {
+      // left handle
+      handleData = 'M4 0h14v80H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z';
+    }
+    else {
+      // right handle
+      handleData = 'M0 0h14a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4H0V0z';
+    }
+
+    // var handle = new Konva.Image({
+    //   x: options.inMarker ? -17 : 1,
+    //   y: 20,
+    //   image: imageObj,
+    //   width: 18,
+    //   height: options.height - 25
+    // });
+
+    var handle = new Konva.Path({
+      x: options.inMarker ? -17 : 1,
+      y: 20,
+      data: handleData,
+      fill: '#FAAB19',
+      scaleY: 0.9375
     });
 
-    // Vertical Line
-
-    var line = new Konva.Line({
-      x:           0,
-      y:           0,
-      points:      [0.5, 0, 0.5, options.height],
-      stroke:      options.color,
-      strokeWidth: 1
+    var handleGrip = new Konva.Path({
+      x: options.inMarker ? -17 : 1,
+      y: 20,
+      data: 'M6.35 30.92v18.13m3-18.13v18.13m3-18.13v18.13',
+      stroke: '#B86B07',
+      dash: [0, 3],
+      lineCap: 'square'
     });
 
     // Events
@@ -133,8 +149,8 @@ define(['konva'], function(Konva) {
     });
 
     group.add(text);
-    group.add(line);
     group.add(handle);
+    group.add(handleGrip);
 
     return group;
   }

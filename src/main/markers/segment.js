@@ -24,13 +24,15 @@ define(function() {
    *   end times can be adjusted via the user interface.
    */
 
-  function Segment(id, startTime, endTime, labelText, color, editable) {
+  function Segment(id, startTime, endTime, labelText, color, editable, startPixel, endPixel) {
     this.id        = id;
     this.startTime = startTime;
     this.endTime   = endTime;
     this.labelText = labelText;
     this.color     = color;
     this.editable  = editable;
+    this.startPixel = startPixel;
+    this.endPixel = endPixel;
   }
 
   /**

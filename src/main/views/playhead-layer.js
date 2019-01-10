@@ -95,9 +95,16 @@ define([
 
   PlayheadLayer.prototype._createPlayhead = function(showTime, playheadColor, playheadTextColor) {
     this._playheadLine = new Konva.Line({
-      points: [0.5, 0, 0.5, this._view.getHeight()],
+      points: [0.5, 0, 0.5, this._view.getHeight() - 5],
       stroke: playheadColor,
-      strokeWidth: 1
+      strokeWidth: 2
+    });
+
+    this._playheadCircle = new Konva.Circle({
+      y: 10,
+      radius: 10,
+      fill: '#0091D9',
+      strokeWidth: 0
     });
 
     if (showTime) {
@@ -114,10 +121,24 @@ define([
 
     this._playheadGroup = new Konva.Group({
       x: 0,
-      y: 0
+      y: 0,
+      draggable: true,
+      dragBoundFunc: function(pos) {
+        return {
+          x: pos.x, // No constraint horizontally
+          y: this.getAbsolutePosition().y // Constrained vertical line
+        };
+      }
     });
 
+    this._playheadGroup.on('dragend', function(e) {
+      if (this._view.constructor.name === 'WaveformZoomView') {
+        this._view.syncPlayheadToAudio(e.target.attrs.x);
+      }
+    }.bind(this));
+
     this._playheadGroup.add(this._playheadLine);
+    this._playheadGroup.add(this._playheadCircle);
 
     if (showTime) {
       this._playheadGroup.add(this._playheadText);

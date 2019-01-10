@@ -163,6 +163,39 @@ define([
       });
 
       segmentGroup.add(segmentGroup.outMarker);
+
+      segmentGroup.highlight = new Konva.Rect({
+        x: 0,
+        y: 22,
+        width: segment.endPixel - segment.startPixel,
+        height: 72,
+        fill: segmentGroup.waveformShape._view.options.overviewHighlightRectangleColor,
+        opacity: 0.3
+      });
+
+      segmentGroup.add(segmentGroup.highlight);
+
+      segmentGroup.markerBoundaryTop = new Konva.Rect({
+        x: 0,
+        y: 20,
+        width: segment.endPixel - segment.startPixel,
+        height: 2,
+        fill: segmentGroup.waveformShape._view.options.inMarkerColor,
+        opacity: 1
+      });
+
+      segmentGroup.add(segmentGroup.markerBoundaryTop);
+
+      segmentGroup.markerBoundaryBottom = new Konva.Rect({
+        x: 0,
+        y: 93,
+        width: segment.endPixel - segment.startPixel,
+        height: 2,
+        fill: segmentGroup.waveformShape._view.options.inMarkerColor,
+        opacity: 1
+      });
+
+      segmentGroup.add(segmentGroup.markerBoundaryBottom);
     }
 
     return segmentGroup;
@@ -204,12 +237,14 @@ define([
                      segmentGroup.inMarker.getWidth();
 
       segment.startTime = this._view.pixelsToTime(inOffset);
+      segment.startPixel = inOffset;
     }
 
     if (outMarkerX < width) {
       var outOffset = frameOffset + outMarkerX;
 
       segment.endTime = this._view.pixelsToTime(outOffset);
+      segment.endPixel = outOffset;
     }
 
     this._peaks.emit('segments.dragged', segment);
@@ -272,6 +307,27 @@ define([
         marker.setX(endPixel);
 
         marker.label.setText(Utils.formatTime(segment.endTime, false));
+      }
+
+      var highlight = segmentGroup.highlight;
+
+      if (highlight && marker) {
+        highlight.setX(startPixel + 1);
+        highlight.setWidth((endPixel + 1) - startPixel);
+      }
+
+      var markerBoundaryTop = segmentGroup.markerBoundaryTop;
+
+      if (markerBoundaryTop && marker) {
+        markerBoundaryTop.setX(startPixel);
+        markerBoundaryTop.setWidth((endPixel + 1) - startPixel);
+      }
+
+      var markerBoundaryBottom = segmentGroup.markerBoundaryBottom;
+
+      if (markerBoundaryBottom && marker) {
+        markerBoundaryBottom.setX(startPixel);
+        markerBoundaryBottom.setWidth((endPixel + 1) - startPixel);
       }
     }
   };

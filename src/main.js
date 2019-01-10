@@ -372,6 +372,13 @@ define('peaks', [
         }
 
         self.segments.add(self.options.segments);
+
+        var time = self.options.segments[0].startTime;
+        var pixels = self.waveform.waveformZoomView.timeToPixels(time);
+
+        self.waveform.waveformZoomView.syncPlayheadToAudio(pixels);
+        self.player.seek(time);
+        self.waveform.waveformZoomView.updateWaveform(pixels - window.innerWidth / 4);
       }
 
       if (self.options.points) {

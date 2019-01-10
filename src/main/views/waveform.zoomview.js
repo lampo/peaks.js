@@ -74,8 +74,6 @@ define([
 
     self.waveformLayer = new Konva.FastLayer();
 
-    self.axis = new WaveformAxis(self, self.waveformLayer);
-
     self.createWaveform();
 
     self._segmentsLayer = new SegmentsLayer(peaks, self, true);
@@ -261,6 +259,19 @@ define([
     // var adapter = this.createZoomAdapter(currentScale, previousScale);
 
     // adapter.start(relativePosition);
+  };
+
+  WaveformZoomView.prototype.syncPlayheadToAudio = function(mousePosX) {
+    if (!this.mouseDragHandler.isDragging()) {
+      var mouseDownX = Math.floor(mousePosX);
+
+      var pixelIndex = this.frameOffset + mouseDownX;
+
+      var time = this.pixelsToTime(pixelIndex);
+
+      this._playheadLayer.updatePlayheadTime(time);
+      this.peaks.player.seek(time);
+    }
   };
 
   WaveformZoomView.prototype.resampleData = function(scale) {

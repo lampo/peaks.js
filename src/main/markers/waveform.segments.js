@@ -157,7 +157,9 @@ define([
       options.endTime,
       options.labelText || '',
       options.color || this._getSegmentColor(),
-      options.editable || false
+      options.editable || false,
+      this._peaks.waveform.waveformZoomView.timeToPixels(options.startTime),
+      this._peaks.waveform.waveformZoomView.timeToPixels(options.endTime)
     );
 
     return segment;

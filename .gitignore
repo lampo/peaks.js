@@ -4,3 +4,5 @@ node_modules
 index.js
 peaks.js
 peaks.js.map
+.vscode
+.DS_Store

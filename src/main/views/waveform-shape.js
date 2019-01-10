@@ -48,6 +48,7 @@ define(['konva'], function(Konva) {
 
   function WaveformShape(options) {
     Konva.Shape.call(this, {
+      y: 12,
       fill: options.color
     });
 
@@ -71,7 +72,7 @@ define(['konva'], function(Konva) {
       this._segment ? this._view.timeToPixels(this._segment.startTime) : frameOffset,
       this._segment ? this._view.timeToPixels(this._segment.endTime)   : frameOffset + width,
       width,
-      height
+      height - 15
     );
 
     context.fillShape(this);
