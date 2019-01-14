@@ -72,7 +72,7 @@ define(['konva'], function(Konva) {
       this._segment ? this._view.timeToPixels(this._segment.startTime) : frameOffset,
       this._segment ? this._view.timeToPixels(this._segment.endTime)   : frameOffset + width,
       width,
-      height - 15
+      height - 25 // 25 is playhead handle height
     );
 
     context.fillShape(this);

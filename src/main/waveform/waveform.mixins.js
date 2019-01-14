@@ -33,11 +33,6 @@ define(['konva'], function(Konva) {
    */
 
   function createSegmentMarker(options) {
-    var handleHeight = 20;
-    var handleWidth  = handleHeight / 2;
-    var handleY      = (options.height / 2) - 10.5;
-    var handleX      = -(handleWidth / 2) + 0.5;
-
     var group = new Konva.Group({
       draggable: options.draggable,
       dragBoundFunc: function(pos) {
@@ -91,25 +86,22 @@ define(['konva'], function(Konva) {
       handleData = 'M0 0h14a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4H0V0z';
     }
 
-    // var handle = new Konva.Image({
-    //   x: options.inMarker ? -17 : 1,
-    //   y: 20,
-    //   image: imageObj,
-    //   width: 18,
-    //   height: options.height - 25
-    // });
+    var handleHeight = 80;
+
+    // 25 = playhead circle height
+    var handleScale = (options.height - 25) / handleHeight;
 
     var handle = new Konva.Path({
       x: options.inMarker ? -17 : 1,
       y: 20,
       data: handleData,
       fill: '#FAAB19',
-      scaleY: 0.9375
+      scaleY: handleScale
     });
 
     var handleGrip = new Konva.Path({
       x: options.inMarker ? -17 : 1,
-      y: 20,
+      y: handleScale * handleHeight / 2 - handleHeight / 4,
       data: 'M6.35 30.92v18.13m3-18.13v18.13m3-18.13v18.13',
       stroke: '#B86B07',
       dash: [0, 3],

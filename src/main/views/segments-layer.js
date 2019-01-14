@@ -168,7 +168,8 @@ define([
         x: 0,
         y: 22,
         width: segment.endPixel - segment.startPixel,
-        height: 72,
+        height: this._peaks.options.height - 26,
+        // y + 2 canvas border + 2 markerBoundary height
         fill: segmentGroup.waveformShape._view.options.overviewHighlightRectangleColor,
         opacity: 0.3
       });
@@ -188,7 +189,7 @@ define([
 
       segmentGroup.markerBoundaryBottom = new Konva.Rect({
         x: 0,
-        y: 93,
+        y: this._peaks.options.height - 7, // 4 is height and canvas boundary. 3 pixels extra was needed to line it up
         width: segment.endPixel - segment.startPixel,
         height: 2,
         fill: segmentGroup.waveformShape._view.options.inMarkerColor,
