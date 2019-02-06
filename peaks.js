@@ -24857,6 +24857,7 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
                     self.updateWaveform(pixelIndex - mouseDownX);
                     self._playheadLayer.updatePlayheadTime(time);
                     self.peaks.player.seek(time);
+                    self.peaks.emit('user_seek.zoomview', time);
                 }
             }
         });
