@@ -124,7 +124,6 @@ define([
           self._playheadLayer.updatePlayheadTime(time);
 
           self.peaks.player.seek(time);
-          self.peaks.emit('user_seek.zoomview', time);
         }
       }
     });
@@ -272,6 +271,7 @@ define([
 
       this._playheadLayer.updatePlayheadTime(time);
       this.peaks.player.seek(time);
+      this.peaks.emit('user_seek.zoomview', time);
     }
   };
 

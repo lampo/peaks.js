@@ -24857,7 +24857,6 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
                     self.updateWaveform(pixelIndex - mouseDownX);
                     self._playheadLayer.updatePlayheadTime(time);
                     self.peaks.player.seek(time);
-                    self.peaks.emit('user_seek.zoomview', time);
                 }
             }
         });
@@ -24944,6 +24943,7 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
             var time = this.pixelsToTime(pixelIndex);
             this._playheadLayer.updatePlayheadTime(time);
             this.peaks.player.seek(time);
+            this.peaks.emit('user_seek.zoomview', time);
         }
     };
     WaveformZoomView.prototype.resampleData = function (scale) {
