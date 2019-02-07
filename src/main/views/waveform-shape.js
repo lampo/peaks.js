@@ -19,7 +19,7 @@ define(['konva'], function(Konva) {
 
   function scaleY(amplitude, height) {
     var range = 256;
-    var offset = 128;
+    var offset = height + 25; // 25 is the playhead height
 
     return height - ((amplitude + offset) * height) / range;
   }

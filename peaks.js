@@ -24583,7 +24583,7 @@ module.exports = function (Konva) {
     'use strict';
     function scaleY(amplitude, height) {
         var range = 256;
-        var offset = 128;
+        var offset = height + 25;
         return height - (amplitude + offset) * height / range;
     }
     function WaveformShape(options) {
