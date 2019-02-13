@@ -24680,16 +24680,6 @@ module.exports = function (PlayheadLayer, PointsLayer, SegmentsLayer, WaveformSh
         peaks.on('zoomview.displaying', function (startTime, endTime) {
             self.updateHighlightRect(startTime, endTime);
         });
-        peaks.on('window_resize', function () {
-            self.container.hidden = true;
-        });
-        peaks.on('window_resize_complete', function (width) {
-            self.width = width;
-            self.data = self.originalWaveformData.resample(self.width);
-            self.stage.setWidth(self.width);
-            self.container.removeAttribute('hidden');
-            self._playheadLayer.zoomLevelChanged();
-        });
         peaks.emit('waveform_ready.overview', this);
     }
     WaveformOverview.prototype.timeToPixels = function (time) {
