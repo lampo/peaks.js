@@ -157,7 +157,6 @@ define([
 
   PlayheadLayer.prototype.updatePlayheadTime = function(time) {
     this._syncPlayhead(time);
-
     if (this._peaks.player.isPlaying()) {
       this._start();
     }

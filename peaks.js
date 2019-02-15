@@ -24856,14 +24856,6 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
             }
             self._playheadLayer.updatePlayheadTime(time);
             var pixelIndex = self.timeToPixels(time);
-            var endThreshold = self.frameOffset + self.width - 100;
-            if (pixelIndex >= endThreshold || pixelIndex < self.frameOffset) {
-                self.frameOffset = pixelIndex - 100;
-                if (self.frameOffset < 0) {
-                    self.frameOffset = 0;
-                }
-                self.updateWaveform(self.frameOffset);
-            }
         });
         self.peaks.on('user_seek', function (time) {
             var frameIndex = self.timeToPixels(time);

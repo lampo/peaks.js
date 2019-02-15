@@ -122,7 +122,6 @@ define([
 
           self.updateWaveform(pixelIndex - mouseDownX);
           self._playheadLayer.updatePlayheadTime(time);
-
           self.peaks.player.seek(time);
         }
       }
@@ -140,22 +139,22 @@ define([
       var pixelIndex = self.timeToPixels(time);
 
       // Check for the playhead reaching the right-hand side of the window.
-
+      // disable scrolling playhead by commenting this out.
       // TODO: move this code to animation function?
       // TODO: don't scroll if user has positioned view manually (e.g., using
       // the keyboard)
-      var endThreshold = self.frameOffset + self.width - 100;
+      // var endThreshold = self.frameOffset + self.width - 100;
 
-      if (pixelIndex >= endThreshold || pixelIndex < self.frameOffset) {
-        // Put the playhead at 100 pixels from the left edge
-        self.frameOffset = pixelIndex - 100;
+      // if (pixelIndex >= endThreshold || pixelIndex < self.frameOffset) {
+      //   // Put the playhead at 100 pixels from the left edge
+      //   self.frameOffset = pixelIndex - 100;
 
-        if (self.frameOffset < 0) {
-          self.frameOffset = 0;
-        }
+      //   if (self.frameOffset < 0) {
+      //     self.frameOffset = 0;
+      //   }
 
-        self.updateWaveform(self.frameOffset);
-      }
+      //   self.updateWaveform(self.frameOffset);
+      // }
     });
 
     self.peaks.on('user_seek', function(time) {
