@@ -24898,6 +24898,20 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
         self.peaks.on('keyboard.shift_right', nudgeFrame.bind(self, 1, true));
         self.peaks.emit('waveform_ready.zoomview', this);
     }
+    WaveformZoomView.prototype.zoomToTimecode = function (time, zoomOffset) {
+        if (!zoomOffset) {
+            zoomOffset = 100;
+        }
+        var pixelIndex = this.timeToPixels(time);
+        var endThreshold = this.frameOffset + this.width - 100;
+        if (pixelIndex >= endThreshold || pixelIndex < this.frameOffset) {
+            this.frameOffset = pixelIndex - zoomOffset;
+            if (this.frameOffset < 0) {
+                this.frameOffset = 0;
+            }
+            this.updateWaveform(this.frameOffset);
+        }
+    };
     WaveformZoomView.prototype.setZoomLevel = function (currentScale, previousScale) {
         if (currentScale === this._scale) {
             return;

@@ -212,6 +212,25 @@ define([
     self.peaks.emit('waveform_ready.zoomview', this);
   }
 
+  WaveformZoomView.prototype.zoomToTimecode = function(time, zoomOffset) {
+    if (!zoomOffset) {
+      zoomOffset = 100;
+    }
+    var pixelIndex = this.timeToPixels(time);
+    var endThreshold = this.frameOffset + this.width - 100;
+
+      if (pixelIndex >= endThreshold || pixelIndex < this.frameOffset) {
+        // Put the playhead at 100 pixels from the left edge
+        this.frameOffset = pixelIndex - zoomOffset;
+
+        if (this.frameOffset < 0) {
+          this.frameOffset = 0;
+        }
+
+        this.updateWaveform(this.frameOffset);
+      }
+  };
+
   /**
    * Changes the zoom level.
    *
