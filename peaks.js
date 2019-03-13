@@ -24452,7 +24452,7 @@ module.exports = function (WaveformShape, Utils, Konva) {
                 x: 0,
                 y: 22,
                 width: segment.endPixel - segment.startPixel,
-                height: this._peaks.options.height - 26,
+                height: this._peaks.options.height - 29,
                 fill: segmentGroup.waveformShape._view.options.overviewHighlightRectangleColor,
                 opacity: 0.3
             });
@@ -24982,6 +24982,18 @@ module.exports = function (WaveformAxis, Utils, PlayheadLayer, PointsLayer, Segm
             view: this
         });
         this.waveformLayer.add(this.waveformShape);
+        this.waveformLayer.add(new Konva.Line({
+            x: 0,
+            y: (this.height + 16) / 2,
+            points: [
+                0,
+                0,
+                this.width,
+                1
+            ],
+            stroke: this.options.zoomWaveformColor,
+            strokeWidth: 1
+        }));
         this.stage.add(this.waveformLayer);
         this.peaks.emit('zoomview.displaying', 0, this.pixelsToTime(this.width));
     };
@@ -25397,29 +25409,24 @@ module.exports = function (Konva) {
         group.label = text;
         var handleData = '';
         if (options.inMarker) {
-            handleData = 'M4 0h14v80H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z';
+            handleData = 'M4 0h18v80H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z';
         } else {
-            handleData = 'M0 0h14a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4H0V0z';
+            handleData = 'M18 80H0V0h18a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4z';
         }
         var handleHeight = 80;
         var handleScale = (options.height - 25) / handleHeight;
         var handle = new Konva.Path({
-            x: options.inMarker ? -17 : 1,
+            x: options.inMarker ? -20 : 1,
             y: 20,
             data: handleData,
             fill: '#FAAB19',
             scaleY: handleScale
         });
         var handleGrip = new Konva.Path({
-            x: options.inMarker ? -17 : 1,
-            y: handleScale * handleHeight / 2 - handleHeight / 4,
-            data: 'M6.35 30.92v18.13m3-18.13v18.13m3-18.13v18.13',
-            stroke: '#B86B07',
-            dash: [
-                0,
-                3
-            ],
-            lineCap: 'square'
+            x: options.inMarker ? -12 : 9,
+            y: handleScale * (handleHeight + 25) / 2,
+            data: 'M0 0h1v1H0V0zm0 3h1v1H0V3zm0 3h1v1H0V6zm0 3h1v1H0V9zm0 3h1v1H0v-1zm0 3h1v1H0v-1zm0 3h1v1H0v-1zM3 0h1v1H3V0zm0 3h1v1H3V3zm0 3h1v1H3V6zm0 3h1v1H3V9zm0 3h1v1H3v-1zm0 3h1v1H3v-1zm0 3h1v1H3v-1zM6 0h1v1H6V0zm0 3h1v1H6V3zm0 3h1v1H6V6zm0 3h1v1H6V9zm0 3h1v1H6v-1zm0 3h1v1H6v-1zm0 3h1v1H6v-1z',
+            fill: '#b86b07'
         });
         if (options.draggable && options.onDrag) {
             group.on('dragmove', function (event) {
@@ -25429,7 +25436,6 @@ module.exports = function (Konva) {
                 if (options.inMarker) {
                     text.setX(xPosition - text.getWidth());
                 }
-                text.show();
                 options.layer.draw();
             });
             group.on('dragend', function (event) {
@@ -25441,7 +25447,6 @@ module.exports = function (Konva) {
             if (options.inMarker) {
                 text.setX(xPosition - text.getWidth());
             }
-            text.show();
             options.layer.draw();
         });
         handle.on('mouseout touchend', function (event) {

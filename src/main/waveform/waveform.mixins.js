@@ -79,11 +79,11 @@ define(['konva'], function(Konva) {
 
     if (options.inMarker) {
       // left handle
-      handleData = 'M4 0h14v80H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z';
+      handleData = 'M4 0h18v80H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z';
     }
     else {
       // right handle
-      handleData = 'M0 0h14a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4H0V0z';
+      handleData = 'M18 80H0V0h18a4 4 0 0 1 4 4v72a4 4 0 0 1-4 4z';
     }
 
     var handleHeight = 80;
@@ -92,7 +92,7 @@ define(['konva'], function(Konva) {
     var handleScale = (options.height - 25) / handleHeight;
 
     var handle = new Konva.Path({
-      x: options.inMarker ? -17 : 1,
+      x: options.inMarker ? -20 : 1,
       y: 20,
       data: handleData,
       fill: '#FAAB19',
@@ -100,12 +100,10 @@ define(['konva'], function(Konva) {
     });
 
     var handleGrip = new Konva.Path({
-      x: options.inMarker ? -17 : 1,
-      y: handleScale * handleHeight / 2 - handleHeight / 4,
-      data: 'M6.35 30.92v18.13m3-18.13v18.13m3-18.13v18.13',
-      stroke: '#B86B07',
-      dash: [0, 3],
-      lineCap: 'square'
+      x: options.inMarker ? -12 : 9,
+      y: handleScale * (handleHeight + 25) / 2,
+      data: 'M0 0h1v1H0V0zm0 3h1v1H0V3zm0 3h1v1H0V6zm0 3h1v1H0V9zm0 3h1v1H0v-1zm0 3h1v1H0v-1zm0 3h1v1H0v-1zM3 0h1v1H3V0zm0 3h1v1H3V3zm0 3h1v1H3V6zm0 3h1v1H3V9zm0 3h1v1H3v-1zm0 3h1v1H3v-1zm0 3h1v1H3v-1zM6 0h1v1H6V0zm0 3h1v1H6V3zm0 3h1v1H6V6zm0 3h1v1H6V9zm0 3h1v1H6v-1zm0 3h1v1H6v-1zm0 3h1v1H6v-1z',
+      fill: '#b86b07'
     });
 
     // Events
@@ -118,7 +116,7 @@ define(['konva'], function(Konva) {
         if (options.inMarker) {
           text.setX(xPosition - text.getWidth());
         }
-        text.show();
+        // text.show();
         options.layer.draw();
       });
       group.on('dragend', function(event) {
@@ -131,7 +129,7 @@ define(['konva'], function(Konva) {
       if (options.inMarker) {
         text.setX(xPosition - text.getWidth());
       }
-      text.show();
+      // text.show();
       options.layer.draw();
     });
 

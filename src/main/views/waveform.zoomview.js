@@ -377,6 +377,15 @@ define([
     });
 
     this.waveformLayer.add(this.waveformShape);
+
+    this.waveformLayer.add(new Konva.Line({
+      x:           0,
+      y:           (this.height + 16) / 2,
+      points:      [0, 0, this.width, 1],
+      stroke:      this.options.zoomWaveformColor,
+      strokeWidth: 1
+    }));
+
     this.stage.add(this.waveformLayer);
 
     this.peaks.emit('zoomview.displaying', 0, this.pixelsToTime(this.width));

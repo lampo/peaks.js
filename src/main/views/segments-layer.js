@@ -168,8 +168,8 @@ define([
         x: 0,
         y: 22,
         width: segment.endPixel - segment.startPixel,
-        height: this._peaks.options.height - 26,
-        // y + 2 canvas border + 2 markerBoundary height
+        height: this._peaks.options.height - 29,
+        // height - playhead height + 4 markerBoundary height
         fill: segmentGroup.waveformShape._view.options.overviewHighlightRectangleColor,
         opacity: 0.3
       });
